@@ -80,19 +80,19 @@ class Drag:
         self.device = device
         cf = import_filename(cfg_path)
         Net, args = cf.Net, cf.args
-        drag_nuwa_net = Net(args)               # Done. checked..
+        motionpro_net = Net(args)               # Done. checked..
         
-        drag_nuwa_net.eval()
-        drag_nuwa_net.to(device)
-        # drag_nuwa_net.half()
-        self.drag_nuwa_net = drag_nuwa_net
+        motionpro_net.eval()
+        motionpro_net.to(device)
+
+        self.motionpro_net = motionpro_net
         
         # 1. load new pt model from svd_flow..
         if model_path.endswith('pt'):
             self.init_from_ckpt(model_path)
         else:
             state_dict = file2data(model_path, map_location='cpu')
-            adaptively_load_state_dict(drag_nuwa_net, state_dict)
+            adaptively_load_state_dict(motionpro_net, state_dict)
         
         # self.height = height
         # self.width = width
@@ -117,7 +117,7 @@ class Drag:
             raise NotImplementedError
 
         # missing, unexpected = self.load_state_dict(sd, strict=True)
-        missing, unexpected = self.drag_nuwa_net.load_state_dict(sd, strict=False)            # todo: change into strict true..
+        missing, unexpected = self.motionpro_net.load_state_dict(sd, strict=False)            # todo: change into strict true..
         print(
             f"Restored from {path} with {len(missing)} missing and {len(unexpected)} unexpected keys"
         )
@@ -132,7 +132,7 @@ class Drag:
     
         all_sample_dict = {}
         b, l, h, w, c = input_drag.size()
-        # drag = self.drag_nuwa_net.apply_gaussian_filter_on_drag(input_drag)
+        # drag = self.motionpro_net.apply_gaussian_filter_on_drag(input_drag)
         # drag = torch.cat([torch.zeros_like(drag[:, 0]).unsqueeze(1), drag], dim=1)  # pad the first frame with zero flow
         drag = rearrange(input_drag, 'b l h w c -> b l c h w')
         all_sample_dict['flow'] = drag
@@ -141,7 +141,7 @@ class Drag:
         input_conditioner['cond_frames_without_noise'] = input_first_frame
         input_conditioner['cond_frames'] = (input_first_frame + 0.02 * torch.randn_like(input_first_frame))
         input_conditioner['motion_bucket_id'] = torch.tensor([motion_bucket_id]).to(drag.device).repeat(b * (l))
-        input_conditioner['fps_id'] = torch.tensor([self.drag_nuwa_net.args.fps]).to(drag.device).repeat(b * (l))
+        input_conditioner['fps_id'] = torch.tensor([self.motionpro_net.args.fps]).to(drag.device).repeat(b * (l))
         input_conditioner['cond_aug'] = torch.tensor([0.02]).to(drag.device).repeat(b * (l))
 
         input_conditioner_uc = {}               # copy all
@@ -149,7 +149,7 @@ class Drag:
             if key not in input_conditioner_uc and isinstance(input_conditioner[key], torch.Tensor):
                 input_conditioner_uc[key] = input_conditioner[key].clone()
         
-        c, uc = self.drag_nuwa_net.conditioner.get_unconditional_conditioning(
+        c, uc = self.motionpro_net.conditioner.get_unconditional_conditioning(
             input_conditioner,
             batch_uc=input_conditioner_uc,
             force_uc_zero_embeddings=[
@@ -159,28 +159,28 @@ class Drag:
         )
 
         for k in ["crossattn", "concat"]:
-            uc[k] = repeat(uc[k], "b ... -> b t ...", t=self.drag_nuwa_net.num_frames)
+            uc[k] = repeat(uc[k], "b ... -> b t ...", t=self.motionpro_net.num_frames)
             uc[k] = rearrange(uc[k], "b t ... -> (b t) ...")
-            c[k] = repeat(c[k], "b ... -> b t ...", t=self.drag_nuwa_net.num_frames)
+            c[k] = repeat(c[k], "b ... -> b t ...", t=self.motionpro_net.num_frames)
             c[k] = rearrange(c[k], "b t ... -> (b t) ...")
     
         H, W = input_conditioner['cond_frames_without_noise'].shape[2:]
-        shape = (self.drag_nuwa_net.num_frames, 4, H // 8, W // 8)
+        shape = (self.motionpro_net.num_frames, 4, H // 8, W // 8)
         randn = torch.randn(shape).to(self.device)
 
         additional_model_inputs = {}
         additional_model_inputs["image_only_indicator"] = torch.zeros(
-            2, self.drag_nuwa_net.num_frames
+            2, self.motionpro_net.num_frames
         ).to(self.device)
-        additional_model_inputs["num_video_frames"] = self.drag_nuwa_net.num_frames
+        additional_model_inputs["num_video_frames"] = self.motionpro_net.num_frames
         additional_model_inputs["flow"] = drag.repeat(2, 1, 1, 1, 1)    # c and uc
 
         def denoiser(input, sigma, c):
-            return self.drag_nuwa_net.denoiser(self.drag_nuwa_net.model, input, sigma, c, **additional_model_inputs)
+            return self.motionpro_net.denoiser(self.motionpro_net.model, input, sigma, c, **additional_model_inputs)
         
-        samples_z = self.drag_nuwa_net.sampler(denoiser, randn, cond=c, uc=uc)
+        samples_z = self.motionpro_net.sampler(denoiser, randn, cond=c, uc=uc)
         
-        samples = self.drag_nuwa_net.decode_first_stage(samples_z)
+        samples = self.motionpro_net.decode_first_stage(samples_z)
         predict_video = rearrange(samples, '(b l) c h w -> b l c h w', b=b)
         all_sample_dict['samples-video'] = predict_video
         save_sample_results(all_sample_dict, output_dir, 'obj_camera_motion', 0, motion_bucket_id=motion_bucket_id, id=id)
@@ -300,7 +300,7 @@ with gr.Blocks() as demo:
     )
 
     
-    MotionPro_net = Drag("cuda:0", ckpt_path, 'vtdm/motionpro_net.py', 16)
+    MotionPro = Drag("cuda:0", ckpt_path, 'vtdm/motionpro_net.py', 16)
     first_frame_path = gr.State()
     first_frame_path_mask = gr.State()
     tracking_points = gr.State([])
@@ -521,6 +521,6 @@ with gr.Blocks() as demo:
 
     input_image.select(add_tracking_points, [tracking_points, first_frame_path], [tracking_points, input_image])
 
-    run_button.click(MotionPro_net.run, [first_frame_path, tracking_points, inference_batch_size, motion_bucket_id, first_frame_path_mask, img_ratio], [output_image, output_video])
+    run_button.click(MotionPro.run, [first_frame_path, tracking_points, inference_batch_size, motion_bucket_id, first_frame_path_mask, img_ratio], [output_image, output_video])
     
     demo.launch(server_name="0.0.0.0", server_port=7865 ,debug=True)
