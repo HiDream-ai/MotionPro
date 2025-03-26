@@ -27,11 +27,8 @@ Additionally, our repository provides more tools to benefit the research communi
 
 ## Video Demos
 
-
-https://github.com/user-attachments/assets/2af6d638-e09c-4e98-a565-43c8ca30f91b
-
-
 <div align="center">
+  <video controls autoplay loop muted playsinline src="https://github.com/user-attachments/assets/2af6d638-e09c-4e98-a565-43c8ca30f91b"></video>
   <p><em>Examples of different motion control types by our MotionPro.</em></p>
 </div>
 
