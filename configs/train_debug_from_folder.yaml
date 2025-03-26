@@ -1,0 +1,231 @@
+data:
+  target: dataset.video_dataset_flow.VideoDataset
+  params:
+    meta_path: data/folders
+    resolution: [320, 512]
+    block_size: 8
+    sample_frames: 16     
+    fps_id: 8
+    random_mask_ratio: [0.95, 1.00]
+    batch_size: 2                             # batch size for a single gpu
+    num_workers: 1
+
+model:
+  target: vtdm.vtdm_gen_v01.VideoLDM
+  base_learning_rate: 1e-5                    # can set constant
+  params:
+    input_key: video                          # get_input()
+    scale_factor: 0.18215
+    log_keys: caption                         # no use for: log_conditionings function
+    num_samples: 16
+    unet_lora_rank: 32
+    trained_param_keys: [flow_blocks, flow_cond_, flow_gamma_, flow_beta_, lora]    # default trainning flow_blocks and lora_params, and flow module
+    en_and_decode_n_samples_a_time: 16        # first stage encoder and decoder batch_size
+    disable_first_stage_autocast: True        
+    ckpt_path: /mnt/zhongwei/datasets/2024_10_21_transit/from_afs_longfuchen/transit/24_06_07/svd_training_traj_control_2406/svd_training_1M_stage_1/all_results/ablation_ratio/2024-09-06T15-23-46_train_stage_1_1M_tar_from_32k_mask_ratio_95_00/checkpoints/trainstep_checkpoints/epoch=000000-step=000015999.ckpt/global_step16000/mp_rank_00_model_states.pt
+  
+    denoiser_config:  
+      target: sgm.modules.diffusionmodules.denoiser.Denoiser
+      params:
+        scaling_config:
+          target: sgm.modules.diffusionmodules.denoiser_scaling.VScalingWithEDMcNoise
+
+    network_config:  
+      target: sgm.modules.diffusionmodules.video_model_flow.VideoUNet_flow
+      params:
+        adm_in_channels: 768
+        num_classes: sequential
+        use_checkpoint: True
+        in_channels: 8
+        out_channels: 4
+        model_channels: 320
+        attention_resolutions: [4, 2, 1]
+        num_res_blocks: 2
+        channel_mult: [1, 2, 4, 4]
+        num_head_channels: 64
+        use_linear_in_transformer: True
+        transformer_depth: 1
+        context_dim: 1024
+        spatial_transformer_attn_type: softmax-xformers
+        extra_ff_mix_layer: True
+        use_spatial_context: True
+        merge_strategy: learned_with_images
+        video_kernel_size: [3, 1, 1]
+        flow_dim_scale: 1
+
+    conditioner_config:
+      target: sgm.modules.GeneralConditioner
+      params:
+        emb_models:
+          # crossattn cond (1024)
+          - is_trainable: False
+            input_key: cond_frames_without_noise
+            ucg_rate: 0.1
+            target: sgm.modules.encoders.modules.FrozenOpenCLIPImagePredictionEmbedder
+            params:
+              n_cond_frames: 1
+              n_copies: 1
+              open_clip_embedding_config:
+                target: sgm.modules.encoders.modules.FrozenOpenCLIPImageEmbedder
+                params:
+                  freeze: True
+
+          # vector cond (256)
+          - input_key: fps_id
+            is_trainable: False
+            ucg_rate: 0.1
+            target: sgm.modules.encoders.modules.ConcatTimestepEmbedderND
+            params:
+              outdim: 256
+
+          # vector cond (256)
+          - input_key: motion_bucket_id
+            is_trainable: False
+            ucg_rate: 0.1
+            target: sgm.modules.encoders.modules.ConcatTimestepEmbedderND
+            params:
+              outdim: 256
+          
+          # concat cond (4)
+          - input_key: cond_frames
+            is_trainable: False
+            ucg_rate: 0.1
+            target: sgm.modules.encoders.modules.VideoPredictionEmbedderWithEncoder
+            params:
+              en_and_decode_n_samples_a_time: 1
+              disable_encoder_autocast: True
+              n_cond_frames: 1
+              n_copies: 1                           # diff---Note: this part means: copy embedding for how much numbers..
+              is_ae: True
+              encoder_config:
+                target: sgm.models.autoencoder.AutoencoderKLModeOnly
+                params:
+                  embed_dim: 4
+                  monitor: val/rec_loss
+                  ddconfig:
+                    attn_type: vanilla-xformers
+                    double_z: True
+                    z_channels: 4
+                    resolution: 256
+                    in_channels: 3
+                    out_ch: 3
+                    ch: 128
+                    ch_mult: [1, 2, 4, 4]
+                    num_res_blocks: 2
+                    attn_resolutions: []
+                    dropout: 0.0
+                  lossconfig:
+                    target: torch.nn.Identity
+
+          # vector cond (256)
+          - input_key: cond_aug
+            ucg_rate: 0.1
+            is_trainable: False
+            target: sgm.modules.encoders.modules.ConcatTimestepEmbedderND
+            params:
+              outdim: 256
+              
+    first_stage_config:
+      target: sgm.models.autoencoder.AutoencodingEngine  
+      params: 
+        loss_config:
+          target: torch.nn.Identity
+        regularizer_config:
+          target: sgm.modules.autoencoding.regularizers.DiagonalGaussianRegularizer
+      
+        encoder_config: 
+          target: sgm.modules.diffusionmodules.model.Encoder
+          params:
+            attn_type: vanilla
+            double_z: True
+            z_channels: 4
+            resolution: 256
+            in_channels: 3
+            out_ch: 3
+            ch: 128
+            ch_mult: [1, 2, 4, 4]
+            num_res_blocks: 2
+            attn_resolutions: []
+            dropout: 0.0
+
+        decoder_config:
+          target: sgm.modules.autoencoding.temporal_ae.VideoDecoder
+          params:
+            attn_type: vanilla
+            double_z: True
+            z_channels: 4
+            resolution: 256        
+            in_channels: 3
+            out_ch: 3
+            ch: 128
+            ch_mult: [1, 2, 4, 4]
+            num_res_blocks: 2
+            attn_resolutions: []
+            dropout: 0.0
+            video_kernel_size: [3,1,1]
+
+
+    loss_fn_config:
+      target: sgm.modules.diffusionmodules.loss.StandardDiffusionLoss
+      params:
+        num_frames: 16                                                     # NOTE: must the same with dataset..
+        batch2model_keys: [num_video_frames, image_only_indicator, flow]   # add flow for dragnvwa_svd, in training process..
+        sigma_sampler_config:
+          target: sgm.modules.diffusionmodules.sigma_sampling.EDMSampling
+          params:
+            p_mean: 0.7                  # [0.7, 1.6] -- more noise for 320*576 reso, [1.0, 1.6] for 576*1024
+            p_std: 1.6
+        loss_weighting_config:
+          target: sgm.modules.diffusionmodules.loss_weighting.VWeighting
+
+
+    sampler_config:
+      target: sgm.modules.diffusionmodules.sampling.EulerEDMSampler
+      params:
+        num_steps: 25
+        verbose: True
+        
+        discretization_config:
+          target: sgm.modules.diffusionmodules.discretizer.EDMDiscretization
+          params:
+            sigma_max: 700.0
+
+        guider_config:
+          target: sgm.modules.diffusionmodules.guiders.LinearPredictionGuider
+          params:
+            num_frames: 16                                                  # video num_frames
+            max_scale: 2.5
+            min_scale: 1.0
+            
+lightning:
+  trainer:
+    # gpus: "0,1,2,3,4,5,6,7"
+    gpus: "1"
+    logger_refresh_rate: 1          # ? doesn't work: only work for log.txt, but not work for TextTube logger
+    check_val_every_n_epoch: 1      # in addition there are: val_check_interval
+    max_epochs: 50
+    accelerator: gpu
+    strategy: deepspeed_stage_2
+    precision: 16
+
+  callbacks:
+    image_logger:
+      target: vtdm.callbacks.ImageLogger
+      params:                       # others are default
+        log_on_batch_idx: True
+        increase_log_steps: False
+        log_first_step: True
+        batch_frequency: 1000       # training set save results frequency..
+        max_images: 8               
+        clamp: True             
+        disabled: False
+        log_images_kwargs:
+          N: 8                      # batch_num per GPU: the same with batch_size
+          sample: True
+          ucg_keys: [cond_frames, cond_frames_without_noise]    # force unconditional cond embedding as zero..
+
+    metrics_over_trainsteps_checkpoint:
+      target: pytorch_lightning.callbacks.ModelCheckpoint
+      params:
+        every_n_train_steps: 2000
+        save_weights_only: True     # NOTE: only save model ckpt but still have optimizer..

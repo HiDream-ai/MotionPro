@@ -1,0 +1,23 @@
+tqdm
+torch>=2.0.1        # we use 2.4.1
+gradio==3.47.1      # NOTE
+pytorch-lightning==1.5.0  # NOTE
+timm==0.6.7           # NOTE for zero-depth
+transformers==4.47.1
+xformers==0.0.28 # NOTE: match with torch, this match with torch==2.4.1
+av==12.0.0
+webdataset==0.2.48
+opencv-python
+importlib
+einops
+scipy
+imageio
+colorlog
+kornia
+open_clip_torch
+omegaconf
+decord
+av
+termcolor
+test-tube
+iopath
