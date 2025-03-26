@@ -18,7 +18,7 @@ This document provides an introduction to the MotionPro-Dense video generation p
 
 
 <div align="center">
-  <video src="./syn_video_control1.mp4" width="90%" autoplay loop muted playsinline poster="">
+  <video src="https://github.com/user-attachments/assets/2559ca21-c44e-475e-81e8-0be6b69002d7" width="90%" autoplay loop muted playsinline poster="">
   </video>
   <p><em>Figure 1: Illustration of video generation with combined motions.</em></p>
 </div>
@@ -29,7 +29,7 @@ This document provides an introduction to the MotionPro-Dense video generation p
 Additionally, the pipeline enables the generation of **synchronized videos**, where a consistent object motion is paired with different camera motions. 
 
 <div align="center">
-  <video src="./syn_video_control2.mp4" width="90%" autoplay loop muted playsinline poster="">
+  <video src="https://github.com/user-attachments/assets/5dcf98cc-5f43-436c-ac4d-1016cd9b7afe" width="90%" autoplay loop muted playsinline poster="">
   </video>
   <p><em>Figure 2: Illustration of synchronized video generation.</em></p>
 </div>
