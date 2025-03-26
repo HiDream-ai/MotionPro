@@ -27,17 +27,13 @@ Additionally, our repository provides more tools to benefit the research communi
 
 ## Video Demos
 
+
+https://github.com/user-attachments/assets/2af6d638-e09c-4e98-a565-43c8ca30f91b
+
+
 <div align="center">
-  <video src="assets/func_1.mp4" width="70%" autoplay loop muted playsinline poster="">
-  </video>
   <p><em>Examples of different motion control types by our MotionPro.</em></p>
 </div>
-
-<!-- <div align="center">
-  <video src="assets/func_1.mp4" width="70%" autoplay loop muted playsinline poster="">
-  </video>
-  <p><em>Figure 2: Synchronized video generation and Video recapture.</em></p>
-</div> -->
 
 ## 🔥 Updates
 - [x] **\[2025.03.26\]** Release inference and training code.
