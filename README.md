@@ -137,10 +137,10 @@ Furthermore, to train the **MotionPro-Dense** model, simply modify the `train_de
 If you find our work helpful for your research, please consider giving a star⭐ on this repository and citing our work📝.
 ```
 @inproceedings{2025motionpro,
-  title={MotionPro: A Precise Motion Controller for Image-to-Video Generation},
-  author={Zhongwei Zhang, Fuchen Long, Zhaofan Qiu, Yingwei Pan, Wu Liu, Ting Yao and Tao Mei},
-  booktitle={CVPR},
-  year={2025}
+ title={{MotionPro: A Precise Motion Controller for Image-to-Video Generation}},
+ author={Zhongwei Zhang and Fuchen Long and Zhaofan Qiu and Yingwei Pan and Wu Liu and Ting Yao and Tao Mei},
+ booktitle={CVPR},
+ year={2025}
 }
 ```
 
