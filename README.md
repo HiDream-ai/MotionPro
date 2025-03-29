@@ -8,6 +8,8 @@
     🖥️ <a href="https://github.com/HiDream-ai/MotionPro">GitHub</a> &nbsp&nbsp ｜ &nbsp&nbsp  🌐 <a href="https://zhw-zhang.github.io/MotionPro-page/"><b>Project Page</b></a> &nbsp&nbsp  | &nbsp&nbsp🤗 <a href="https://huggingface.co/HiDream-ai/MotionPro/tree/main">Hugging Face</a>&nbsp&nbsp | &nbsp&nbsp 📑 <a href="">Paper </a> &nbsp&nbsp | &nbsp&nbsp 📖 <a href="">PDF</a> &nbsp&nbsp 
 <br>
 
+## Please wait for paper release, we will update the code..
+
 [**MotionPro: A Precise Motion Controller for Image-to-Video Generation**](https://zhw-zhang.github.io/MotionPro-page/) <be>
 
 🔆 If you find MotionPro useful, please give a ⭐ for this repo, which is important to Open-Source projects. Thanks!
@@ -34,9 +36,9 @@ Additionally, our repository provides more tools to benefit the research communi
 
 ## 🔥 Updates
 - [x] **\[2025.03.26\]** Release inference and training code.
-- [ ] **\[2025.03.27\]** Upload gradio demo usage video.
-- [ ] **\[2025.03.29\]** Release MC-Bench and evaluation code.
-- [ ] **\[2025.03.30\]** Upload annotation tool for image-trajectory pair construction.
+- [ ] Upload gradio demo usage video.
+- [ ] Release MC-Bench and evaluation code.
+- [ ] Upload annotation tool for image-trajectory pair construction.
 
 ## 🏃🏼 Inference
 <details open>
