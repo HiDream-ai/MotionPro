@@ -7,9 +7,7 @@
 <p align="center">
     🖥️ <a href="https://github.com/HiDream-ai/MotionPro">GitHub</a> &nbsp&nbsp ｜ &nbsp&nbsp  🌐 <a href="https://zhw-zhang.github.io/MotionPro-page/"><b>Project Page</b></a> &nbsp&nbsp  | &nbsp&nbsp🤗 <a href="https://huggingface.co/HiDream-ai/MotionPro/tree/main">Hugging Face</a>&nbsp&nbsp | &nbsp&nbsp 📑 <a href="">Paper </a> &nbsp&nbsp | &nbsp&nbsp 📖 <a href="">PDF</a> &nbsp&nbsp 
 <br>
-
-## Please wait for paper release, we will update the code..
-
+## Please wait for paper release....
 [**MotionPro: A Precise Motion Controller for Image-to-Video Generation**](https://zhw-zhang.github.io/MotionPro-page/) <be>
 
 🔆 If you find MotionPro useful, please give a ⭐ for this repo, which is important to Open-Source projects. Thanks!
@@ -36,8 +34,8 @@ Additionally, our repository provides more tools to benefit the research communi
 
 ## 🔥 Updates
 - [x] **\[2025.03.26\]** Release inference and training code.
+- [ ] **\[2025.04.08\]** Release MC-Bench and evaluation code.
 - [ ] Upload gradio demo usage video.
-- [ ] Release MC-Bench and evaluation code.
 - [ ] Upload annotation tool for image-trajectory pair construction.
 
 ## 🏃🏼 Inference
@@ -124,7 +122,7 @@ Additionally, `./data/dot_single_video` contains code for processing raw videos 
 
 Simply run the following command to train MotionPro:
 ```
-train_server_1.sh
+bash train_server_1.sh
 ```
 In addition to loading video data from folders, we also support [WebDataset](https://rom1504.github.io/webdataset/), allowing videos to be read directly from tar files for training. This can be enabled by modifying the config file:
 ```
@@ -133,10 +131,24 @@ train_debug_from_folder.yaml -> train_debug_from_tar.yaml
 
 Furthermore, to train the **MotionPro-Dense** model, simply modify the `train_debug_from_tar.yaml` file by changing `VidTar` to `VidTar_all_flow` and updating the `ckpt_path`.
 
+
+## 📝Evaluation
+
+
+<summary><strong>MC-Bench</strong></summary>
+
+Simply download 🤗[MC-Bench](https://huggingface.co/HiDream-ai/MotionPro/blob/main/data/MC-Bench.tar), extract the files, and place them in the `./data` directory.
+
+<summary><strong>Run eval script</strong></summary>
+
+Simply execute the following command to evaluate MotionPro on MC-Bench and Webvid:
+```
+bash eval_model.sh
+```
 </details>
 
 ## 🌟 Star and Citation
-If you find our work helpful for your research, please consider giving a star⭐ on this repository and citing our work📝.
+If you find our work helpful for your research, please consider giving a star⭐ on this repository and citing our work.
 ```
 @inproceedings{2025motionpro,
  title={{MotionPro: A Precise Motion Controller for Image-to-Video Generation}},
