@@ -34,7 +34,7 @@ Additionally, our repository provides more tools to benefit the research communi
 
 ## 🔥 Updates
 - [x] **\[2025.03.26\]** Release inference and training code.
-- [ ] **\[2025.04.08\]** Release MC-Bench and evaluation code.
+- [x] **\[2025.04.08\]** Release MC-Bench and evaluation code.
 - [ ] Upload gradio demo usage video.
 - [ ] Upload annotation tool for image-trajectory pair construction.
 
