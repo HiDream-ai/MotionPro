@@ -7,7 +7,11 @@
 <p align="center">
     🖥️ <a href="https://github.com/HiDream-ai/MotionPro">GitHub</a> &nbsp&nbsp ｜ &nbsp&nbsp  🌐 <a href="https://zhw-zhang.github.io/MotionPro-page/"><b>Project Page</b></a> &nbsp&nbsp  | &nbsp&nbsp🤗 <a href="https://huggingface.co/HiDream-ai/MotionPro/tree/main">Hugging Face</a>&nbsp&nbsp | &nbsp&nbsp 📑 <a href="">Paper </a> &nbsp&nbsp | &nbsp&nbsp 📖 <a href="">PDF</a> &nbsp&nbsp 
 <br>
+
+
 ## Please wait for paper release....
+
+
 [**MotionPro: A Precise Motion Controller for Image-to-Video Generation**](https://zhw-zhang.github.io/MotionPro-page/) <be>
 
 🔆 If you find MotionPro useful, please give a ⭐ for this repo, which is important to Open-Source projects. Thanks!
