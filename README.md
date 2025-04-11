@@ -134,22 +134,20 @@ train_debug_from_folder.yaml -> train_debug_from_tar.yaml
 ```
 
 Furthermore, to train the **MotionPro-Dense** model, simply modify the `train_debug_from_tar.yaml` file by changing `VidTar` to `VidTar_all_flow` and updating the `ckpt_path`.
-
+</details>
 
 ## 📝Evaluation
-
-
-<summary><strong>MC-Bench</strong></summary>
+<strong>MC-Bench</strong>
 
 Simply download 🤗[MC-Bench](https://huggingface.co/HiDream-ai/MotionPro/blob/main/data/MC-Bench.tar), extract the files, and place them in the `./data` directory.
 
-<summary><strong>Run eval script</strong></summary>
+<strong>Run eval script</strong>
 
 Simply execute the following command to evaluate MotionPro on MC-Bench and Webvid:
 ```
 bash eval_model.sh
 ```
-</details>
+
 
 ## 🌟 Star and Citation
 If you find our work helpful for your research, please consider giving a star⭐ on this repository and citing our work.
