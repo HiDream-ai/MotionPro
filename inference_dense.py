@@ -22,7 +22,9 @@ sys.path.append('tools/co-tracker')
 from cotracker.predictor import CoTrackerPredictor
 from cotracker.utils.visualizer import read_video_from_path
 
-
+'''
+Motion Control with Dense Flow condition
+'''
 
 def convert_pred_points_into_flow(pred_tracks, video_interp, pred_visibility):
 

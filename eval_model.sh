@@ -4,7 +4,7 @@ python eval_mc_bench.py \
     --dataset_path data/MC-Bench \
     --seed 2025 \
     --output_dir all_results/eval/mc_bench
-
+ 
 # 1.2 Eval MD-Video
 cd tools/co-tracker
 pip install -e .

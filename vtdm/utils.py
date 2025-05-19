@@ -19,7 +19,21 @@ import sys
 import yaml
 from torchvision.utils import flow_to_image
 from torchvision import utils
+import json
 
+
+def convert_rgba_to_rgb(rgba_image):
+
+
+    rgb_image = Image.new('RGB', rgba_image.size, (255, 255, 255))
+    rgb_image.paste(rgba_image, mask=rgba_image.split()[3])  
+
+    return rgb_image
+
+def save_dict_to_json(dict_data, file_path):
+    with open(file_path, 'w', encoding='utf-8') as json_file:
+        json.dump(dict_data, json_file, ensure_ascii=False)
+    print(f"Dictionary has been saved to {file_path}")
 
 def data2file(data, filename, type=None, override=False, printable=False, **kwargs):
     dirname, rootname, extname = split_filename(filename)

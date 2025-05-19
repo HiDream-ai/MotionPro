@@ -14,6 +14,9 @@ import datetime
 from pathlib import Path
 from PIL import Image
 
+'''
+Eval FVD based on 1000 videos
+'''
 
 def save_sample_results(images, batch, save_dir=None, batch_idx=0, node_rank=0):
     

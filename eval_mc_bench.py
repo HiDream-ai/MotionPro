@@ -8,6 +8,9 @@ from scipy.interpolate import interp1d, PchipInterpolator
 import cv2
 import argparse
 
+'''
+Eval Fine-grained and object-level motion control based on MC-Bench
+'''
 
 def interpolate_trajectory(points, n_points):
     x = [point[0] for point in points]
