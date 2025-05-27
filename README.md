@@ -37,7 +37,7 @@ Additionally, our repository provides more tools to benefit the research communi
 - [x] **\[2025.03.26\]** Release inference and training code.
 - [x] **\[2025.04.08\]** Release MC-Bench and evaluation code.
 - [x] **\[2025.05.20\]** Upload annotation tool for image-trajectory pair construction.
-- [x] **\[2025.05.27\]** Upload Our Arxiv Paper.
+- [x] **\[2025.05.27\]** Upload Our arXiv Paper.
 ## 🏃🏼 Inference
 <details open>
 <summary><strong>Environment Requirement</strong></summary>
