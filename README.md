@@ -9,9 +9,6 @@
 <br>
 
 
-## Please wait for paper release....
-
-
 [**MotionPro: A Precise Motion Controller for Image-to-Video Generation**](https://zhw-zhang.github.io/MotionPro-page/) <be>
 
 🔆 If you find MotionPro useful, please give a ⭐ for this repo, which is important to Open-Source projects. Thanks!
