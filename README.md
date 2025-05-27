@@ -5,7 +5,7 @@
 <p>
 
 <p align="center">
-    🖥️ <a href="https://github.com/HiDream-ai/MotionPro">GitHub</a> &nbsp&nbsp ｜ &nbsp&nbsp  🌐 <a href="https://zhw-zhang.github.io/MotionPro-page/"><b>Project Page</b></a> &nbsp&nbsp  | &nbsp&nbsp🤗 <a href="https://huggingface.co/HiDream-ai/MotionPro/tree/main">Hugging Face</a>&nbsp&nbsp | &nbsp&nbsp 📑 <a href="">Paper </a> &nbsp&nbsp | &nbsp&nbsp 📖 <a href="">PDF</a> &nbsp&nbsp 
+    🖥️ <a href="https://github.com/HiDream-ai/MotionPro">GitHub</a> &nbsp&nbsp ｜ &nbsp&nbsp  🌐 <a href="https://zhw-zhang.github.io/MotionPro-page/"><b>Project Page</b></a> &nbsp&nbsp  | &nbsp&nbsp🤗 <a href="https://huggingface.co/HiDream-ai/MotionPro/tree/main">Hugging Face</a>&nbsp&nbsp | &nbsp&nbsp 📑 <a href="https://arxiv.org/abs/2505.20287">Paper </a> &nbsp&nbsp | &nbsp&nbsp 📖 <a href="https://arxiv.org/pdf/2505.20287">PDF</a> &nbsp&nbsp 
 <br>
 
 
@@ -40,7 +40,7 @@ Additionally, our repository provides more tools to benefit the research communi
 - [x] **\[2025.03.26\]** Release inference and training code.
 - [x] **\[2025.04.08\]** Release MC-Bench and evaluation code.
 - [x] **\[2025.05.20\]** Upload annotation tool for image-trajectory pair construction.
-
+- [x] **\[2025.05.27\]** Upload Our Arxiv Paper.
 ## 🏃🏼 Inference
 <details open>
 <summary><strong>Environment Requirement</strong></summary>
