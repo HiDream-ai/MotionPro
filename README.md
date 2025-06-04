@@ -38,7 +38,7 @@ Additionally, our repository provides more tools to benefit the research communi
 - [x] **\[2025.04.08\]** Release MC-Bench and evaluation code.
 - [x] **\[2025.05.20\]** Upload annotation tool for image-trajectory pair construction.
 - [x] **\[2025.05.27\]** Upload Our arXiv Paper.
-- [x] **\[2025.06.04\]** Upload a tutorial video on how to use Gradio in `assets/demo.mp4`.
+- [x] **\[2025.06.04\]** Upload a tutorial video demonstrating how to use Gradio at `assets/demo.mp4`.
 ## 🏃🏼 Inference
 <details open>
 <summary><strong>Environment Requirement</strong></summary>
