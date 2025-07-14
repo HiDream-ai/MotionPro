@@ -22,8 +22,8 @@ model:
     trained_param_keys: [flow_blocks, flow_cond_, flow_gamma_, flow_beta_, lora]    # default trainning flow_blocks and lora_params, and flow module
     en_and_decode_n_samples_a_time: 16        # first stage encoder and decoder batch_size
     disable_first_stage_autocast: True        
-    ckpt_path: /mnt/zhongwei/datasets/2024_10_21_transit/from_afs_longfuchen/transit/24_06_07/svd_training_traj_control_2406/svd_training_1M_stage_1/all_results/ablation_ratio/2024-09-06T15-23-46_train_stage_1_1M_tar_from_32k_mask_ratio_95_00/checkpoints/trainstep_checkpoints/epoch=000000-step=000015999.ckpt/global_step16000/mp_rank_00_model_states.pt
-  
+    ckpt_path: LOCAL_PATH ---Download from https://huggingface.co/HiDream-ai/MotionPro/blob/main/MotionPro-gs_16k.pt
+
     denoiser_config:  
       target: sgm.modules.diffusionmodules.denoiser.Denoiser
       params:

@@ -1,3 +1,10 @@
+# This YAML file is provided as a reference. 
+# Compared to the train_debug_*.yaml files, the main differences 
+# are the batch size, number of GPUs, and the scale of the training dataset. 
+# It cannot be run directly at the moment, as we are unable to provide the full training data.
+
+# YOU CAN: use any of the train_debug_*.yaml files under the configs directory to run and debug the training code
+
 data:
   target: dataset.video_dataset_flow_tar.VideoDataset
   params: 
@@ -11,7 +18,7 @@ data:
       target: dataset.vidtar.VidTar
       params:
         use_oss: True
-        data_path: /mnt/afs_longfuchen/zhangzhongwei/oss_cache/webvid_dot_1M.txt
+        data_path: 
         data_key: [mp4, avi]     
         random_mask_ratio: [0.95, 1.0]
         clip_sampler:
@@ -44,7 +51,7 @@ model:
     trained_param_keys: [flow_blocks, flow_cond_, flow_gamma_, flow_beta_, lora]
     en_and_decode_n_samples_a_time: 16
     disable_first_stage_autocast: True        
-    ckpt_path: /mnt/zhongwei/datasets/2024_10_21_transit/from_afs_longfuchen/transit/24_06_07/svd_training_traj_control_2406/svd_training_1M_stage_1/all_results/ablation_ratio/2024-09-06T15-23-46_train_stage_1_1M_tar_from_32k_mask_ratio_95_00/checkpoints/trainstep_checkpoints/epoch=000000-step=000015999.ckpt/global_step16000/mp_rank_00_model_states.pt
+    ckpt_path: LOCAL_PATH ---Download from https://huggingface.co/HiDream-ai/MotionPro/blob/main/MotionPro-gs_16k.pt
   
     denoiser_config:  
       target: sgm.modules.diffusionmodules.denoiser.Denoiser

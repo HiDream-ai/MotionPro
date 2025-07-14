@@ -11,7 +11,7 @@ model:
     trained_param_keys: [flow_blocks, flow_cond_, flow_gamma_, flow_beta_, lora] 
     en_and_decode_n_samples_a_time: 16       
     disable_first_stage_autocast: True        
-    ckpt_path: 
+    ckpt_path: LOCAL_PATH ---Download from https://huggingface.co/HiDream-ai/MotionPro/blob/main/MotionPro-gs_16k.pt
   
     denoiser_config:  
       target: sgm.modules.diffusionmodules.denoiser.Denoiser
