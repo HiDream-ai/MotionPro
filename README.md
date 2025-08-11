@@ -79,6 +79,13 @@ bash download_hfd.sh
 
 This section of the code supports simultaneous object motion and camera motion control. We provide a user-friendly Gradio demo interface that allows users to control motion with simple brushing and dragging operations. The instructional video can be found in `assets/demo.mp4` (please note the version of gradio).
 
+
+
+https://github.com/user-attachments/assets/af9a1768-8781-4e29-a071-c96292c8fc17
+
+
+
+
 ```
 python demo_sparse_flex_wh.py
 ```
