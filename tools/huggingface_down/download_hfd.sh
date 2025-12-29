@@ -6,7 +6,7 @@
 
 # Ref hfd from: https://hf-mirror.com/
 
-sudo apt install aria2c
+sudo apt install aria2
 export HF_ENDPOINT=https://hf-mirror.com
 
 # Set the parameters
