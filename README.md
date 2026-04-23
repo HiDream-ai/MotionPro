@@ -156,11 +156,12 @@ bash eval_model.sh
 ## 🌟 Star and Citation
 If you find our work helpful for your research, please consider giving a star⭐ on this repository and citing our work.
 ```
-@inproceedings{2025motionpro,
- title={{MotionPro: A Precise Motion Controller for Image-to-Video Generation}},
- author={Zhongwei Zhang and Fuchen Long and Zhaofan Qiu and Yingwei Pan and Wu Liu and Ting Yao and Tao Mei},
- booktitle={CVPR},
- year={2025}
+@inproceedings{zhang2025motionpro,
+  title={Motionpro: A precise motion controller for image-to-video generation},
+  author={Zhang, Zhongwei and Long, Fuchen and Qiu, Zhaofan and Pan, Yingwei and Liu, Wu and Yao, Ting and Mei, Tao},
+  booktitle={Proceedings of the Computer Vision and Pattern Recognition Conference},
+  pages={27957--27967},
+  year={2025}
 }
 ```
 
